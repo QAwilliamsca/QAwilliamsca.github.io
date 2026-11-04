@@ -50,7 +50,7 @@
     <div class="stat"><b data-count="83" data-suffix="%">83%</b><span>faster critical-path checks, about 3 hours down to 30 minutes</span></div>
     <div class="stat"><b data-count="180" data-suffix="+">180+</b><span>manual design-system cases automated in Playwright</span></div>
     <div class="stat"><b data-count="70" data-suffix="+">70+</b><span>security tests by user role, in nightly pipelines</span></div>
-    <div class="stat"><b data-count="218" data-suffix="">218</b><span>unit tests on LiftLog, plus 212 browser and smoke checks</span></div>
+    <div class="stat"><b data-count="249" data-suffix="">249</b><span>unit tests on LiftLog, plus 217 browser checks</span></div>
   </div>
 </div></section>
 
@@ -61,7 +61,7 @@
   <div class="work-list">
   <a class="row reveal" href="#/liftlog"><span class="n">01</span><h3>LiftLog<span class="sub">Live shop-management app · Django, PostgreSQL</span></h3><span class="go">Read the case study →</span></a>
   <a class="row reveal" href="#/insightforge"><span class="n">02</span><h3>InsightForge<span class="sub">AI business intelligence assistant · LangChain, RAG</span></h3><span class="go">Read the case study →</span></a>
-  <a class="row reveal" href="#/playwright-framework"><span class="n">03</span><h3>Playwright framework<span class="sub">24 UI and API tests · Page Object Model, CI</span></h3><span class="go">Read the case study →</span></a>
+  <a class="row reveal" href="#/playwright-framework"><span class="n">03</span><h3>Playwright framework<span class="sub">27 UI and API tests · Page Object Model, CI</span></h3><span class="go">Read the case study →</span></a>
   </div>
 </div>
 <!-- Fly-through: shown only when JS is on, motion is allowed and the screen is wide. Otherwise the list above is used. -->
@@ -70,9 +70,9 @@
     <div class="fly-stage">
       <p class="fly-count" aria-hidden="true"><span id="fly-now">01</span> / 03</p>
       <p class="fly-hint" aria-hidden="true">Scroll to fly through the work</p>
-      <a class="fcard" href="#/liftlog"><span class="n">01</span><h3>LiftLog</h3><p>Live shop-management app for an auto shop. I owned the requirements and the quality gates.</p><span class="facts">218 unit tests · 212 browser checks · 23 live-site checks</span><span class="go">Read the case study →</span></a>
+      <a class="fcard" href="#/liftlog"><span class="n">01</span><h3>LiftLog</h3><p>Live shop-management app for an auto shop. I owned the requirements and the quality gates.</p><span class="facts">249 unit tests · 217 browser checks · 24 live-site checks</span><span class="go">Read the case study →</span></a>
       <a class="fcard" href="#/insightforge"><span class="n">02</span><h3>InsightForge</h3><p>AI business intelligence assistant, built as the UCSB PaCE capstone.</p><span class="facts">LangChain · RAG · OpenAI · Streamlit</span><span class="go">Read the case study →</span></a>
-      <a class="fcard" href="#/playwright-framework"><span class="n">03</span><h3>Playwright framework</h3><p>A framework that shows how I structure automation, with CI on every push.</p><span class="facts">24 UI and API tests · Page Object Model · GitHub Actions</span><span class="go">Read the case study →</span></a>
+      <a class="fcard" href="#/playwright-framework"><span class="n">03</span><h3>Playwright framework</h3><p>A framework that shows how I structure automation, with CI on every push.</p><span class="facts">27 UI and API tests · Page Object Model · GitHub Actions</span><span class="go">Read the case study →</span></a>
     </div>
   </div>
 </div>
@@ -118,10 +118,18 @@
     <p class="lead">A live shop-management web app for an auto shop: work orders, customers, hours and reports. Built with Django and PostgreSQL and deployed on DigitalOcean.</p>
     <h3>My role</h3>
     <p>I directed an AI engineer through the build and owned the requirements and the quality gates.</p>
+    <figure><img src="assets/liftlog-ticket-board.png" alt="LiftLog shop board showing open tickets by bay, with a customer to contact" loading="lazy"><figcaption>The shop board. Course project with a fictional shop and made-up customers; no real customer data.</figcaption></figure>
+    <h3>How I wrote the requirements</h3>
+    <p>I broke the project into eleven stages and kept one engineering guide that recorded every decision with its date. Each stage had a clear definition of done. I also kept a list of what was left out of the first version on purpose, such as refunds, payroll and texting customers, so nothing was dropped by accident.</p>
     <h3>Quality gates</h3>
-    <ul><li>218 unit tests</li><li>212 browser and smoke checks</li><li>23 read-only checks against the live site</li></ul>
+    <ul><li>249 unit and integration tests</li><li>217 real-browser checks across every main screen, on phone and desktop, in dark and light</li><li>A backup-and-restore drill that rebuilds live data in a scratch copy</li><li>24 read-only checks against the live site after every release</li></ul>
+    <figure><img src="assets/liftlog-release-gates.png" alt="Diagram of LiftLog's release gates: 249 tests, 217 browser checks, a backup and restore drill, one push to redeploy, and 24 live-site checks" loading="lazy"><figcaption>Nothing ships unless every gate passes.</figcaption></figure>
+    <h3>Bugs the gates caught</h3>
+    <p>I tested the gates by breaking the build on purpose three times: a template error, a removed role restriction, and a phone layout that scrolled sideways. Each broken build was refused. Later, a scripted edit by my AI assistant overwrote our main engineering guide with text from another file, and it went into three commits before anyone noticed. We restored it from history, wrote an incident note, and added a test that fails the build if a key document loses its expected content. A mistake that passes silently is the dangerous kind, so now a test guards it.</p>
     <h3>Security</h3>
-    <p>Role-based access, sign-in throttling and two-step sign-in.</p>
+    <p>Role-based access for managers, techs, cashiers and accountants, strict separation of each shop's data, sign-in throttling, two-step sign-in, a content security policy and an audit log of every change.</p>
+    <figure><img src="assets/liftlog-daily-report.png" alt="LiftLog daily report showing receipts by cash, card and Zelle for the day and the week" loading="lazy"><figcaption>The daily report, with made-up customers and a test card number.</figcaption></figure>
+    <p>The code repository is private. I'm happy to walk through it live in an interview.</p>
   </article>
 </div>
 
@@ -131,7 +139,16 @@
     <h1 id="t-insightforge">InsightForge</h1>
     <p class="lead">An AI business intelligence assistant built as the capstone for the UC Santa Barbara PaCE Applied Generative AI Specialization.</p>
     <h3>Built with</h3>
-    <p>LangChain, retrieval-augmented generation (RAG), OpenAI and Streamlit.</p>
+    <p>LangChain, retrieval-augmented generation (RAG), OpenAI and Streamlit. This was a course project, not a production system.</p>
+    <h3>How it works</h3>
+    <ul><li>The reference PDFs are split into chunks, embedded and indexed in a FAISS vector store. The best-matching chunks are retrieved into the prompt.</li><li>Prompt chaining: an analysis prompt feeds a recommendation prompt, and chat memory keeps context for each session.</li><li>Evaluation and monitoring: QAEvalChain grades answers against expected ones, and a log records each question's speed, tokens, cost and status.</li></ul>
+    <h3>What it answers</h3>
+    <p>It reads 2,500 sales records and four reference PDFs, then answers plain-English questions such as "Which product sells best and where?", "How have sales trended over the years?" and "Which customer segment should we target?". It also reports the median and standard deviation of sales.</p>
+    <h3>Also included</h3>
+    <p>A Jupyter notebook that walks through every step, a Streamlit app with chat, dashboard, data insights, evaluation and monitoring tabs, and charts for the sales trends.</p>
+    <p><a href="https://github.com/QAwilliamsca/InsightForge">View the code on GitHub</a></p>
+    <figure><img src="assets/insightforge-dashboard.png" alt="InsightForge sales dashboard showing total sales, transactions, median sale and a monthly sales trend chart" loading="lazy"><figcaption>The dashboard tab, running on the course's sample sales data.</figcaption></figure>
+    <figure><img src="assets/insightforge-passed.png" alt="Course platform result for Enabling AI-Powered Business Intelligence for Organizations, Course-end Project 1, marked passed" loading="lazy"><figcaption>The course result: "Enabling AI-Powered Business Intelligence for Organizations" was marked passed.</figcaption></figure>
   </article>
 </div>
 
@@ -141,7 +158,10 @@
     <h1 id="t-pw">Playwright framework</h1>
     <p class="lead">A Playwright and TypeScript framework that shows how I structure automation.</p>
     <h3>What it includes</h3>
-    <ul><li>Page Object Model</li><li>24 UI and API tests against public practice sites</li><li>Environment-based configuration</li><li>A GitHub Actions pipeline that runs on every push</li></ul>
+    <ul><li>Page Object Model</li><li>27 UI and API tests against public practice sites</li><li>Environment-based configuration</li><li>A GitHub Actions pipeline that runs on every push</li></ul>
+    <p><a href="https://github.com/QAwilliamsca/playwright-automation-framework/actions/workflows/playwright.yml"><img src="https://github.com/QAwilliamsca/playwright-automation-framework/actions/workflows/playwright.yml/badge.svg" alt="Playwright tests status"></a></p>
+    <p><a href="https://github.com/QAwilliamsca/playwright-automation-framework">View the code on GitHub</a></p>
+    <figure><img src="assets/playwright-report.png" alt="Playwright HTML report showing 27 tests passed, 0 failed" loading="lazy"><figcaption>The HTML report from a full run on 4 November 2026: 27 passed, 0 failed.</figcaption></figure>
   </article>
 </div>
 
