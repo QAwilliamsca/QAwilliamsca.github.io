@@ -32,9 +32,9 @@
   function count(q) {
     try {
       if (window.goatcounter && window.goatcounter.count) {
-        window.goatcounter.count({ path: "bot/" + q.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""), title: q, event: true });
+        window.goatcounter.count({ path: "/bot/" + q.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""), title: "Bot question: " + q });
       }
-    } catch (e) {}
+    } catch (e) { if (window.console) console.warn("bot count failed", e); }
   }
   add("bot", "Hi, I'm an automated bot with ready answers about Christine's work. Pick a question below.");
   QA.forEach(function (item) {
