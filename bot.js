@@ -29,11 +29,19 @@
     log.appendChild(d);
     log.scrollTop = log.scrollHeight;
   }
+  function count(q) {
+    try {
+      if (window.goatcounter && window.goatcounter.count) {
+        window.goatcounter.count({ path: "bot/" + q.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""), title: q, event: true });
+      }
+    } catch (e) {}
+  }
   add("bot", "Hi, I'm an automated bot with ready answers about Christine's work. Pick a question below.");
   QA.forEach(function (item) {
     var b = document.createElement("button");
     b.type = "button"; b.className = "bot-q"; b.textContent = item.q;
     b.addEventListener("click", function () {
+      count(item.q);
       add("me", item.q);
       setTimeout(function () { add("bot", item.a, item.link, item.linkText); }, reduce ? 0 : 250);
     });

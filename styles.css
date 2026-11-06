@@ -356,3 +356,4 @@ body { background: radial-gradient(1200px 700px at 80% -10%, rgba(0, 70, 170, 0.
 .bot-q { background: transparent; color: var(--body); border: 1px solid var(--line-strong); border-radius: 999px; padding: 8px 14px; font: inherit; font-size: 14px; cursor: pointer; }
 .bot-q:hover { background: rgba(255, 255, 255, 0.08); color: var(--ink); }
 .bot-q[aria-pressed="true"] { border-color: var(--accent-hover); color: var(--ink); }
+.bot-note { margin: 14px 0 0; font-size: 12px; color: var(--muted); }
